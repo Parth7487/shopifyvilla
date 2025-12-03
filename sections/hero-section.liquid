@@ -3,8 +3,6 @@
   Highly customizable with text, button, colors, and background options
 {% endcomment %}
 
-{{ 'hero-section.css' | asset_url | stylesheet_tag }}
-
 <section class="hero-section" id="hero-{{ section.id }}" style="
   {% if section.settings.background_image %}
     background-image: url('{{ section.settings.background_image | image_url: width: 1920 }}');
