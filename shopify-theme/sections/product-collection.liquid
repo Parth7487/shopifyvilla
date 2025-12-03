@@ -1,0 +1,491 @@
+{% comment %}
+  Product Collection Section
+  Displays products in a grid with customizable text, colors, and layout
+{% endcomment %}
+
+{{ 'product-collection.css' | asset_url | stylesheet_tag }}
+
+<section class="product-collection-section" id="collection-{{ section.id }}" style="
+  background-color: {{ section.settings.background_color }};
+  padding-top: {{ section.settings.padding_top }}px;
+  padding-bottom: {{ section.settings.padding_bottom }}px;
+">
+  <div class="product-collection-container">
+    {% if section.settings.label != blank or section.settings.heading != blank %}
+      <div class="product-collection-header" style="text-align: {{ section.settings.text_alignment }};">
+        {% if section.settings.label != blank %}
+          <p class="collection-label" style="
+            color: {{ section.settings.label_color }};
+            font-size: {{ section.settings.label_size }}px;
+          ">
+            {{ section.settings.label }}
+          </p>
+        {% endif %}
+        
+        {% if section.settings.heading != blank %}
+          <h2 class="collection-heading" style="
+            color: {{ section.settings.heading_color }};
+            font-size: {{ section.settings.heading_size }}px;
+            font-weight: {{ section.settings.heading_weight }};
+          ">
+            {{ section.settings.heading }}
+          </h2>
+        {% endif %}
+
+        {% if section.settings.description != blank %}
+          <p class="collection-description" style="
+            color: {{ section.settings.description_color }};
+            font-size: {{ section.settings.description_size }}px;
+          ">
+            {{ section.settings.description }}
+          </p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if section.settings.collection != blank %}
+      <div class="product-grid" style="
+        grid-template-columns: repeat({{ section.settings.products_per_row }}, 1fr);
+        gap: {{ section.settings.grid_gap }}px;
+      ">
+        {% for product in collections[section.settings.collection].products limit: section.settings.products_limit %}
+          {% render 'product-card', product: product, section: section %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="product-grid" style="
+        grid-template-columns: repeat({{ section.settings.products_per_row }}, 1fr);
+        gap: {{ section.settings.grid_gap }}px;
+      ">
+        {% for i in (1..6) %}
+          <div class="product-card-placeholder">
+            <div class="placeholder-image"></div>
+            <div class="placeholder-text"></div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if section.settings.show_bundle_offer %}
+      <div class="bundle-offer" style="
+        background: linear-gradient(to right, {{ section.settings.bundle_bg_color_1 }}, {{ section.settings.bundle_bg_color_2 }});
+        border-color: {{ section.settings.bundle_border_color }};
+        padding: {{ section.settings.bundle_padding }}px;
+      ">
+        {% if section.settings.bundle_label != blank %}
+          <p class="bundle-label" style="color: {{ section.settings.bundle_text_color }};">
+            {{ section.settings.bundle_label }}
+          </p>
+        {% endif %}
+        
+        {% if section.settings.bundle_heading != blank %}
+          <h3 class="bundle-heading" style="color: {{ section.settings.bundle_text_color }};">
+            {{ section.settings.bundle_heading }}
+          </h3>
+        {% endif %}
+
+        {% if section.settings.bundle_description != blank %}
+          <p class="bundle-description" style="color: {{ section.settings.bundle_text_color }};">
+            {{ section.settings.bundle_description }}
+          </p>
+        {% endif %}
+
+        {% if section.settings.bundle_button_text != blank %}
+          <a href="{{ section.settings.bundle_button_link }}" class="bundle-button" style="
+            background-color: {{ section.settings.bundle_button_bg }};
+            color: {{ section.settings.bundle_button_text_color }};
+          ">
+            {{ section.settings.bundle_button_text }}
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .product-collection-section {
+    width: 100%;
+  }
+
+  .product-collection-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .product-collection-header {
+    margin-bottom: 64px;
+  }
+
+  .collection-label {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 300;
+    margin-bottom: 16px;
+  }
+
+  .collection-heading {
+    margin-bottom: 24px;
+    line-height: 1.2;
+  }
+
+  .collection-description {
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .product-grid {
+    display: grid;
+    margin-bottom: 48px;
+  }
+
+  .product-card-placeholder {
+    aspect-ratio: 1;
+    background: #f5f5f4;
+    border-radius: 8px;
+  }
+
+  .placeholder-image {
+    width: 100%;
+    height: 80%;
+    background: #e5e5e5;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .placeholder-text {
+    height: 20%;
+    background: #f5f5f4;
+    border-radius: 0 0 8px 8px;
+  }
+
+  .bundle-offer {
+    border-radius: 8px;
+    border: 1px solid;
+    text-align: center;
+    margin-top: 48px;
+  }
+
+  .bundle-label {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 12px;
+    font-weight: 300;
+    margin-bottom: 16px;
+  }
+
+  .bundle-heading {
+    font-size: 32px;
+    font-weight: 300;
+    margin-bottom: 16px;
+  }
+
+  .bundle-description {
+    font-size: 16px;
+    font-weight: 300;
+    margin-bottom: 24px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .bundle-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 48px;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 12px;
+    font-weight: 300;
+    transition: all 0.3s ease;
+  }
+
+  .bundle-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  @media (max-width: 1024px) {
+    .product-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .product-grid {
+      grid-template-columns: 1fr !important;
+    }
+
+    .collection-heading {
+      font-size: 32px !important;
+    }
+
+    .bundle-heading {
+      font-size: 24px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Product Collection",
+  "tag": "section",
+  "class": "section-product-collection",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Text Settings"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "Riviera Collection"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Label Color",
+      "default": "#78716c"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "label": "Label Size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Discover Our Collection"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#1c1917"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading Size",
+      "min": 24,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Heading Weight",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Normal" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "300"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Handcrafted Mediterranean-inspired designs"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#78716c"
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Description Size",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Product Grid Settings"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_limit",
+      "label": "Products to Show",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "products_per_row",
+      "label": "Products Per Row",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Grid Gap",
+      "min": 16,
+      "max": 64,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "Bundle Offer Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bundle_offer",
+      "label": "Show Bundle Offer",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "bundle_label",
+      "label": "Bundle Label",
+      "default": "Special Offer"
+    },
+    {
+      "type": "text",
+      "id": "bundle_heading",
+      "label": "Bundle Heading",
+      "default": "Buy 2 for 799 kr • Buy 3 for 1199 kr"
+    },
+    {
+      "type": "textarea",
+      "id": "bundle_description",
+      "label": "Bundle Description",
+      "default": "Save more when you buy multiple items"
+    },
+    {
+      "type": "text",
+      "id": "bundle_button_text",
+      "label": "Bundle Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "bundle_button_link",
+      "label": "Bundle Button Link"
+    },
+    {
+      "type": "color",
+      "id": "bundle_bg_color_1",
+      "label": "Bundle Background Color 1",
+      "default": "#f5f5f4"
+    },
+    {
+      "type": "color",
+      "id": "bundle_bg_color_2",
+      "label": "Bundle Background Color 2",
+      "default": "#fafaf9"
+    },
+    {
+      "type": "color",
+      "id": "bundle_border_color",
+      "label": "Bundle Border Color",
+      "default": "#e7e5e4"
+    },
+    {
+      "type": "color",
+      "id": "bundle_text_color",
+      "label": "Bundle Text Color",
+      "default": "#1c1917"
+    },
+    {
+      "type": "color",
+      "id": "bundle_button_bg",
+      "label": "Bundle Button Background",
+      "default": "#1c1917"
+    },
+    {
+      "type": "color",
+      "id": "bundle_button_text_color",
+      "label": "Bundle Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "bundle_padding",
+      "label": "Bundle Padding",
+      "min": 24,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Collection"
+    }
+  ]
+}
+{% endschema %}
+

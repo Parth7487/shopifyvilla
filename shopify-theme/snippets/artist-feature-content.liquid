@@ -1,0 +1,107 @@
+{% comment %}
+  Artist Feature Content Snippet
+{% endcomment %}
+
+<div class="artist-content" style="color: {{ section.settings.text_color }};">
+  {% if section.settings.label != blank %}
+    <p class="artist-label" style="
+      color: {{ section.settings.label_color }};
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 12px;
+      font-weight: 300;
+      margin-bottom: 16px;
+    ">
+      {{ section.settings.label }}
+    </p>
+  {% endif %}
+
+  {% if section.settings.heading != blank %}
+    <h2 class="artist-heading" style="
+      color: {{ section.settings.heading_color }};
+      font-size: {{ section.settings.heading_size }}px;
+      font-weight: 300;
+      margin-bottom: 32px;
+      line-height: 1.2;
+    ">
+      {{ section.settings.heading }}
+    </h2>
+  {% endif %}
+
+  {% if section.settings.paragraph_1 != blank %}
+    <p class="artist-paragraph" style="
+      font-size: 18px;
+      font-weight: 300;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    ">
+      {{ section.settings.paragraph_1 }}
+    </p>
+  {% endif %}
+
+  {% if section.settings.paragraph_2 != blank %}
+    <p class="artist-paragraph-secondary" style="
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.6;
+      margin-bottom: 32px;
+      color: {{ section.settings.secondary_text_color }};
+    ">
+      {{ section.settings.paragraph_2 }}
+    </p>
+  {% endif %}
+
+  {% if section.settings.quote != blank %}
+    <blockquote class="artist-quote" style="
+      border-left: 4px solid #44403c;
+      padding-left: 24px;
+      padding-top: 24px;
+      padding-bottom: 24px;
+      font-style: italic;
+      font-size: 18px;
+      font-weight: 300;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    ">
+      "{{ section.settings.quote }}"
+    </blockquote>
+  {% endif %}
+
+  {% if section.settings.quote_author != blank %}
+    <p class="artist-quote-author" style="
+      font-size: 14px;
+      font-weight: 300;
+      color: {{ section.settings.secondary_text_color }};
+      margin-bottom: 32px;
+    ">
+      — {{ section.settings.quote_author }}
+    </p>
+  {% endif %}
+
+  {% if section.settings.cta_text != blank %}
+    <a 
+      href="{{ section.settings.cta_link }}" 
+      class="artist-cta"
+      style="
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        color: {{ section.settings.secondary_text_color }};
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 12px;
+        font-weight: 300;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      "
+      onmouseover="this.style.color='{{ section.settings.text_color }}'"
+      onmouseout="this.style.color='{{ section.settings.secondary_text_color }}'"
+    >
+      {{ section.settings.cta_text }}
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </a>
+  {% endif %}
+</div>
+
