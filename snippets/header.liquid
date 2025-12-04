@@ -3,20 +3,37 @@
   Customizable header with navigation, logo, and cart
 {% endcomment %}
 
-{% assign header_bg = section.settings.header_bg_color | default: '#ffffff' %}
-{% assign header_border = section.settings.header_border_color | default: '#e7e5e4' %}
-{% assign show_banner = section.settings.show_banner | default: true %}
-{% assign banner_text = section.settings.banner_text | default: 'Free shipping on orders over 500 kr' %}
-{% assign banner_bg_1 = section.settings.banner_bg_color_1 | default: '#f5f5f4' %}
-{% assign banner_bg_2 = section.settings.banner_bg_color_2 | default: '#fafaf9' %}
-{% assign banner_text_color = section.settings.banner_text_color | default: '#78716c' %}
-{% assign logo_img = section.settings.logo %}
-{% assign logo_height = section.settings.logo_height | default: 56 %}
-{% assign logo_text_size = section.settings.logo_text_size | default: 24 %}
-{% assign logo_text_color = section.settings.logo_text_color | default: '#1c1917' %}
-{% assign menu_handle = section.settings.menu | default: 'main-menu' %}
-{% assign nav_color = section.settings.nav_text_color | default: '#1c1917' %}
-{% assign nav_size = section.settings.nav_text_size | default: 14 %}
+{% if section and section.settings %}
+  {% assign header_bg = section.settings.header_bg_color | default: '#ffffff' %}
+  {% assign header_border = section.settings.header_border_color | default: '#e7e5e4' %}
+  {% assign show_banner = section.settings.show_banner | default: true %}
+  {% assign banner_text = section.settings.banner_text | default: 'Free shipping on orders over 500 kr' %}
+  {% assign banner_bg_1 = section.settings.banner_bg_color_1 | default: '#f5f5f4' %}
+  {% assign banner_bg_2 = section.settings.banner_bg_color_2 | default: '#fafaf9' %}
+  {% assign banner_text_color = section.settings.banner_text_color | default: '#78716c' %}
+  {% assign logo_img = section.settings.logo %}
+  {% assign logo_height = section.settings.logo_height | default: 56 %}
+  {% assign logo_text_size = section.settings.logo_text_size | default: 24 %}
+  {% assign logo_text_color = section.settings.logo_text_color | default: '#1c1917' %}
+  {% assign menu_handle = section.settings.menu | default: 'main-menu' %}
+  {% assign nav_color = section.settings.nav_text_color | default: '#1c1917' %}
+  {% assign nav_size = section.settings.nav_text_size | default: 14 %}
+{% else %}
+  {% assign header_bg = '#ffffff' %}
+  {% assign header_border = '#e7e5e4' %}
+  {% assign show_banner = true %}
+  {% assign banner_text = 'Free shipping on orders over 500 kr' %}
+  {% assign banner_bg_1 = '#f5f5f4' %}
+  {% assign banner_bg_2 = '#fafaf9' %}
+  {% assign banner_text_color = '#78716c' %}
+  {% assign logo_img = blank %}
+  {% assign logo_height = 56 %}
+  {% assign logo_text_size = 24 %}
+  {% assign logo_text_color = '#1c1917' %}
+  {% assign menu_handle = 'main-menu' %}
+  {% assign nav_color = '#1c1917' %}
+  {% assign nav_size = 14 %}
+{% endif %}
 
 <header class="site-header" style="
   background-color: {{ header_bg }};

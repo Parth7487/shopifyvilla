@@ -3,21 +3,39 @@
   Customizable footer with links, newsletter, and social media
 {% endcomment %}
 
-{% assign footer_bg = section.settings.footer_bg_color | default: '#1c1917' %}
-{% assign footer_text_color = section.settings.footer_text_color | default: '#f5f5f4' %}
-{% assign footer_padding_top = section.settings.footer_padding_top | default: 64 %}
-{% assign footer_padding_bottom = section.settings.footer_padding_bottom | default: 64 %}
-{% assign show_newsletter = section.settings.show_newsletter | default: true %}
-{% assign newsletter_heading = section.settings.newsletter_heading | default: 'Stay Updated' %}
-{% assign newsletter_text = section.settings.newsletter_text | default: 'Subscribe to our newsletter for exclusive offers' %}
-{% assign newsletter_placeholder = section.settings.newsletter_placeholder | default: 'Enter your email' %}
-{% assign newsletter_button_text = section.settings.newsletter_button_text | default: 'Subscribe' %}
-{% assign columns_count = section.settings.columns_count | default: 4 %}
-{% assign grid_gap = section.settings.grid_gap | default: 32 %}
-{% assign show_social = section.settings.show_social | default: true %}
-{% assign social_instagram = section.settings.social_instagram %}
-{% assign social_facebook = section.settings.social_facebook %}
-{% assign copyright_text = section.settings.copyright_text | default: 'All rights reserved.' %}
+{% if section and section.settings %}
+  {% assign footer_bg = section.settings.footer_bg_color | default: '#1c1917' %}
+  {% assign footer_text_color = section.settings.footer_text_color | default: '#f5f5f4' %}
+  {% assign footer_padding_top = section.settings.footer_padding_top | default: 64 %}
+  {% assign footer_padding_bottom = section.settings.footer_padding_bottom | default: 64 %}
+  {% assign show_newsletter = section.settings.show_newsletter | default: true %}
+  {% assign newsletter_heading = section.settings.newsletter_heading | default: 'Stay Updated' %}
+  {% assign newsletter_text = section.settings.newsletter_text | default: 'Subscribe to our newsletter for exclusive offers' %}
+  {% assign newsletter_placeholder = section.settings.newsletter_placeholder | default: 'Enter your email' %}
+  {% assign newsletter_button_text = section.settings.newsletter_button_text | default: 'Subscribe' %}
+  {% assign columns_count = section.settings.columns_count | default: 4 %}
+  {% assign grid_gap = section.settings.grid_gap | default: 32 %}
+  {% assign show_social = section.settings.show_social | default: true %}
+  {% assign social_instagram = section.settings.social_instagram %}
+  {% assign social_facebook = section.settings.social_facebook %}
+  {% assign copyright_text = section.settings.copyright_text | default: 'All rights reserved.' %}
+{% else %}
+  {% assign footer_bg = '#1c1917' %}
+  {% assign footer_text_color = '#f5f5f4' %}
+  {% assign footer_padding_top = 64 %}
+  {% assign footer_padding_bottom = 64 %}
+  {% assign show_newsletter = true %}
+  {% assign newsletter_heading = 'Stay Updated' %}
+  {% assign newsletter_text = 'Subscribe to our newsletter for exclusive offers' %}
+  {% assign newsletter_placeholder = 'Enter your email' %}
+  {% assign newsletter_button_text = 'Subscribe' %}
+  {% assign columns_count = 4 %}
+  {% assign grid_gap = 32 %}
+  {% assign show_social = true %}
+  {% assign social_instagram = blank %}
+  {% assign social_facebook = blank %}
+  {% assign copyright_text = 'All rights reserved.' %}
+{% endif %}
 
 <footer class="site-footer" style="
   background-color: {{ footer_bg }};
@@ -48,7 +66,7 @@
       grid-template-columns: repeat({{ columns_count }}, 1fr);
       gap: {{ grid_gap }}px;
     ">
-      {% if section.blocks.size > 0 %}
+      {% if section and section.blocks.size > 0 %}
         {% for block in section.blocks %}
           {% case block.type %}
             {% when 'linklist' %}
