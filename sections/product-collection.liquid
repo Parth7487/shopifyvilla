@@ -3,8 +3,6 @@
   Displays products in a grid with customizable text, colors, and layout
 {% endcomment %}
 
-{{ 'product-collection.css' | asset_url | stylesheet_tag }}
-
 <section class="product-collection-section" id="collection-{{ section.id }}" style="
   background-color: {{ section.settings.background_color }};
   padding-top: {{ section.settings.padding_top }}px;
